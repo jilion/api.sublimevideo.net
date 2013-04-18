@@ -1,0 +1,62 @@
+class Oauth2Verifier < OauthToken
+
+  attr_accessor :state
+
+  validates :user_id, presence: true
+
+  def exchange!(params = {})
+    OauthToken.transaction do
+      token = Oauth2Token.create!(user: user, client_application: client_application, scope: scope)
+      invalidate!
+      token
+    end
+  end
+
+  def code
+    token
+  end
+
+  def redirect_url
+    callback_url
+  end
+
+  def to_query
+    q = "code=#{token}"
+    q << "&state=#{URI.escape(state)}" if @state
+    q
+  end
+
+  protected
+
+  def generate_keys
+    self.token         = SecureRandom.base64(20).gsub(/\W/, '')[0, 20]
+    self.valid_to      = 10.minutes.from_now
+    self.authorized_at = Time.now.utc
+  end
+
+end
+
+# == Schema Information
+#
+# Table name: oauth_tokens
+#
+#  authorized_at         :datetime
+#  callback_url          :string(255)
+#  client_application_id :integer
+#  created_at            :datetime         not null
+#  id                    :integer          not null, primary key
+#  invalidated_at        :datetime
+#  scope                 :string(255)
+#  secret                :string(40)
+#  token                 :string(40)
+#  type                  :string(20)
+#  updated_at            :datetime         not null
+#  user_id               :integer
+#  valid_to              :datetime
+#  verifier              :string(20)
+#
+# Indexes
+#
+#  index_oauth_tokens_on_token  (token) UNIQUE
+#
+

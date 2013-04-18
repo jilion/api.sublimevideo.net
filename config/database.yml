@@ -1,0 +1,27 @@
+development:
+  adapter: postgresql
+  encoding: utf8
+  database: apsv_development
+  pool: 25
+  host: localhost
+
+test:
+  adapter: postgresql
+  encoding: utf8
+  database: apsv_test
+  pool: 25
+  host: localhost
+
+staging:
+  adapter: postgresql
+  encoding: utf8
+  database: apsv_staging
+  pool: 25
+  host: localhost
+
+production:
+  adapter: postgresql
+  encoding: utf8
+  database: apsv_development
+  pool: 25
+  host: localhost
