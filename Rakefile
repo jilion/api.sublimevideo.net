@@ -1,7 +1,7 @@
 #!/usr/bin/env rake
 require 'portugal/tasks'
 Portugal.configure do |config|
-  config.migrations_path = File.expand_path('db/migrations', __dir__))
+  config.migrations_path = File.expand_path('db/migrations', __dir__)
 end
 
 # This task is called before Portugal executes its tasks.
