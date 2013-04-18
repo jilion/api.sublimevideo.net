@@ -34,7 +34,7 @@ describe SublimeVideo::APIs::V1::Site do
       it 'returns an empty array of sites' do
         get '/sites'
         last_response.status.should eq 200
-        MultiJson.load(last_response.body).should eq []
+        MultiJson.load(last_response.body).should eq({ 'sites' => [] })
       end
     end
 
@@ -45,6 +45,33 @@ describe SublimeVideo::APIs::V1::Site do
       end
 
       it_behaves_like 'authorized and valid response on /sites'
+
+      describe 'response attributes' do
+        it 'has the right attributes' do
+          body = MultiJson.load(last_response.body, symbolize_keys: true)
+          body.should eq({
+            sites: [
+              {
+                site: {
+                  token: @sites.first.token, hostname: @sites.first.hostname,
+                  accessible_stage: @sites.first.accessible_stage,
+                  extra_domains: [], dev_domains: [], staging_domains: [],
+                  wildcard: true, path: ''
+                }
+              },
+              {
+                site: {
+                  token: @sites.last.token, hostname: @sites.last.hostname,
+                  accessible_stage: @sites.last.accessible_stage,
+                  extra_domains: %w[rymai.org rymai.net], dev_domains: %w[rymai.dev remy.dev],
+                  staging_domains: %w[staging.rymai.com staging.rymai.me],
+                  wildcard: false, path: 'blog'
+                }
+              }
+            ]
+          })
+        end
+      end
     end
   end
 
@@ -78,7 +105,7 @@ describe SublimeVideo::APIs::V1::Site do
           body = MultiJson.load(last_response.body, symbolize_keys: true)
           body.should eq({
             site: {
-              token: @site.token, hostname: @site.hostname, accessible_stage: 'beta',
+              token: @site.token, hostname: @site.hostname, accessible_stage: @site.accessible_stage,
               extra_domains: [], dev_domains: [], staging_domains: [],
               wildcard: true, path: ''
             }
@@ -96,7 +123,7 @@ describe SublimeVideo::APIs::V1::Site do
           body = MultiJson.load(last_response.body, symbolize_keys: true)
           body.should eq({
             site: {
-              token: @site.token, hostname: @site.hostname, accessible_stage: 'alpha',
+              token: @site.token, hostname: @site.hostname, accessible_stage: @site.accessible_stage,
               extra_domains: %w[rymai.org rymai.net], dev_domains: %w[rymai.dev remy.dev],
               staging_domains: %w[staging.rymai.com staging.rymai.me],
               wildcard: false, path: 'blog'

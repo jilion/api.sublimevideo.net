@@ -1,5 +1,3 @@
-collection @sites
-# TODO: Use the sites/show partial
-attributes :token, :hostname
-# attributes partial('sites/show')
-# node(:site => partial('sites/show'))
+collection @sites => :sites
+
+extends('sites/show')

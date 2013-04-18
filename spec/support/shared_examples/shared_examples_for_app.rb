@@ -17,28 +17,32 @@ end
 
 shared_examples 'authorized and valid response on /sites' do
   it 'returns a 200 and an array of sites' do
-    body = MultiJson.load(last_response.body, symbolize_keys: true)
+    body = MultiJson.load(last_response.body)
+    body.should be_a(Hash)
+    body['sites'].should be_a(Array)
     @sites.each_with_index do |site, index|
-      body[index][:site][:token].should eq site.token
-      body[index][:site][:hostname].should eq site.hostname
+      body['sites'][index]['site']['token'].should eq site.token
+      body['sites'][index]['site']['hostname'].should eq site.hostname
     end
-    body.should have(@sites.size).sites
+    body['sites'].should have(@sites.size).sites
     last_response.status.should eq 200
   end
 end
 
 shared_examples 'authorized and valid response on /sites/:token' do
   it 'returns a 200 and a site' do
-    body = MultiJson.load(last_response.body, symbolize_keys: true)
-    body[:site][:token].should eq @site.token
-    body[:site][:hostname].should eq @site.hostname
+    body = MultiJson.load(last_response.body)
+    body.should be_a(Hash)
+    body['site'].should be_a(Hash)
+    body['site']['token'].should eq @site.token
+    body['site']['hostname'].should eq @site.hostname
     last_response.status.should eq 200
   end
 end
 
 shared_examples 'resource not found response' do
   it 'returns a 404 Resource Not Found' do
-    MultiJson.load(last_response.body, symbolize_keys: true).should eq({ error: '404 Resource Not Found' })
+    MultiJson.load(last_response.body).should eq({ 'error' => '404 Resource Not Found' })
     last_response.status.should eq 404
   end
 end
