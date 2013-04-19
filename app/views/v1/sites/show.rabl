@@ -1,7 +1,8 @@
 object @site
 
-attributes :token, :hostname, :accessible_stage
+attributes :token, :accessible_stage
 
+node(:main_domain) { |site| site.hostname }
 node(:extra_domains) { |site| site.extra_hostnames.try(:split, ', ') || [] }
 node(:dev_domains) { |site| site.dev_hostnames.try(:split, ', ') || [] }
 node(:staging_domains) { |site| site.staging_hostnames.try(:split, ', ') || [] }

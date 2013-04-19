@@ -58,21 +58,17 @@ describe SublimeVideo::APIs::V1::Site do
           body.should eq({
             sites: [
               {
-                site: {
-                  token: @sites.first.token, hostname: @sites.first.hostname,
-                  accessible_stage: @sites.first.accessible_stage,
-                  extra_domains: [], dev_domains: [], staging_domains: [],
-                  wildcard: true, path: ''
-                }
+                token: @sites.first.token, main_domain: @sites.first.hostname,
+                accessible_stage: @sites.first.accessible_stage,
+                extra_domains: [], dev_domains: [], staging_domains: [],
+                wildcard: true, path: ''
               },
               {
-                site: {
-                  token: @sites.last.token, hostname: @sites.last.hostname,
-                  accessible_stage: @sites.last.accessible_stage,
-                  extra_domains: %w[rymai.org rymai.net], dev_domains: %w[rymai.dev remy.dev],
-                  staging_domains: %w[staging.rymai.com staging.rymai.me],
-                  wildcard: false, path: 'blog'
-                }
+                token: @sites.last.token, main_domain: @sites.last.hostname,
+                accessible_stage: @sites.last.accessible_stage,
+                extra_domains: %w[rymai.org rymai.net], dev_domains: %w[rymai.dev remy.dev],
+                staging_domains: %w[staging.rymai.com staging.rymai.me],
+                wildcard: false, path: 'blog'
               }
             ]
           })
@@ -111,9 +107,9 @@ describe SublimeVideo::APIs::V1::Site do
           body = MultiJson.load(last_response.body, symbolize_keys: true)
           body.should eq({
             site: {
-              token: @site.token, hostname: @site.hostname, accessible_stage: @site.accessible_stage,
-              extra_domains: [], dev_domains: [], staging_domains: [],
-              wildcard: true, path: ''
+              token: @site.token, main_domain: @site.hostname,
+              accessible_stage: @site.accessible_stage, extra_domains: [],
+              dev_domains: [], staging_domains: [], wildcard: true, path: ''
             }
           })
         end
@@ -129,8 +125,10 @@ describe SublimeVideo::APIs::V1::Site do
           body = MultiJson.load(last_response.body, symbolize_keys: true)
           body.should eq({
             site: {
-              token: @site.token, hostname: @site.hostname, accessible_stage: @site.accessible_stage,
-              extra_domains: %w[rymai.org rymai.net], dev_domains: %w[rymai.dev remy.dev],
+              token: @site.token, main_domain: @site.hostname,
+              accessible_stage: @site.accessible_stage,
+              extra_domains: %w[rymai.org rymai.net],
+              dev_domains: %w[rymai.dev remy.dev],
               staging_domains: %w[staging.rymai.com staging.rymai.me],
               wildcard: false, path: 'blog'
             }

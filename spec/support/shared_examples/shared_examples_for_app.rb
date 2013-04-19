@@ -18,8 +18,8 @@ shared_examples 'authorized and valid response on /sites' do
     body.should be_a(Hash)
     body['sites'].should be_a(Array)
     @sites.each_with_index do |site, index|
-      body['sites'][index]['site']['token'].should eq site.token
-      body['sites'][index]['site']['hostname'].should eq site.hostname
+      body['sites'][index]['token'].should eq site.token
+      body['sites'][index]['main_domain'].should eq site.hostname
     end
     body['sites'].should have(@sites.size).sites
     last_response.status.should eq 200
@@ -32,7 +32,7 @@ shared_examples 'authorized and valid response on /sites/:token' do
     body.should be_a(Hash)
     body['site'].should be_a(Hash)
     body['site']['token'].should eq @site.token
-    body['site']['hostname'].should eq @site.hostname
+    body['site']['main_domain'].should eq @site.hostname
     last_response.status.should eq 200
   end
 end
