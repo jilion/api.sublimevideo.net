@@ -21,6 +21,9 @@ ActiveRecord::Base.establish_connection(
   database: config['database']
 )
 
+$:.push File.expand_path('../', __dir__)
+$:.push File.expand_path('../lib', __dir__)
+
 # Require models
 Dir[File.expand_path('../app/models/**/*.rb', __dir__)].each do |file|
   dirname = File.dirname(file)

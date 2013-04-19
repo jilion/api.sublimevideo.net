@@ -1,5 +1,3 @@
-$:.push File.expand_path('../', __dir__)
-
 ENV['RACK_ENV'] ||= 'test'
 
 require ::File.expand_path('../config/boot', __dir__)
