@@ -4,10 +4,10 @@ require ::File.expand_path('config/boot', __dir__)
 
 if %w[staging production].include?(ENV['RACK_ENV'])
   require 'rack/ssl'
-  require 'rack/status'
   use Rack::SSL
-  use Rack::Status
 end
 
+require 'rack/status'
+use Rack::Status
 
 run SublimeVideo::API

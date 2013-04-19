@@ -30,6 +30,14 @@ describe 'Outer App' do
     end
   end
 
+  describe '/status' do
+    it 'is up' do
+      get '/status'
+
+      last_response.status.should eq 200
+    end
+  end
+
   describe 'API Authorization' do
     context 'without a token' do
       before { get '/sites' }

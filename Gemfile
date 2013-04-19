@@ -19,10 +19,12 @@ gem 'grape'
 gem 'grape-rabl'
 gem 'kaminari'
 
+# Rack middleware
+gem 'rack-status'
+
 group :staging, :production do
   gem 'unicorn'
   gem 'rack-ssl'
-  gem 'rack-status'
   # gem 'lograge'
   gem 'dalli'
   # gem 'rack-cache'
