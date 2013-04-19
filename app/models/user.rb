@@ -14,6 +14,6 @@ class User
   end
 
   def self.authorize!(env)
-    env['rack.oauth2.access_token'] && env['rack.oauth2.access_token'].user
+    env['api.token'] && env['api.token'].user
   end
 end

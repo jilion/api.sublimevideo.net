@@ -8,8 +8,12 @@ describe SublimeVideo::APIs::V1::Site do
   end
 
   let(:user) { User.new(id: 1) }
+  let(:application) { ClientApplication.create!(user_id: user.id, name: 'WordPress plugin', url: 'http://docs.sublimevideo.net/wordpress') }
+  let(:token) { Oauth2Token.create!(user_id: user.id, client_application: application) }
+
   before do
-    User.should_receive(:authorize!).and_return(user)
+    header 'Authorization', "Bearer #{token.token}"
+
     @sites = [
       Site.new(token: 'abcd1234', hostname: 'rymai.me', accessible_stage: 'beta',
                extra_hostnames: '', dev_hostnames: '', staging_hostnames: '', wildcard: true, path: nil),
@@ -25,6 +29,8 @@ describe SublimeVideo::APIs::V1::Site do
       stub.get("#{route_prefix}/#{@sites.last.token}") { |env| [200, {}, @sites.last.to_json] }
       stub.get("#{route_prefix}/foo") { |env| [404, {}, @sites.first.to_json] }
     end
+
+    User.should_receive(:authorize!).and_return(user)
   end
 
   describe "GET /sites" do

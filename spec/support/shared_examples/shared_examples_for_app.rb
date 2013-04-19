@@ -1,16 +1,13 @@
 shared_examples 'unauthorized response' do
   it 'returns a 401 Unauthorized' do
-    MultiJson.load(last_response.body, symbolize_keys: true).should eq({ error: '401 Unauthorized' })
+    MultiJson.load(last_response.body).should eq({ 'error' => 'invalid_token' })
     last_response.status.should eq 401
   end
 end
 
 shared_examples 'invalid token response' do
   it 'returns a 401 Invalid Token' do
-    MultiJson.load(last_response.body, symbolize_keys: true).should eq({
-      error: 'invalid_token',
-      error_description: 'The access token provided is expired, revoked, malformed or invalid for other reasons.'
-    })
+    MultiJson.load(last_response.body).should eq({ 'error' => 'invalid_token' })
     last_response.status.should eq 401
   end
 end

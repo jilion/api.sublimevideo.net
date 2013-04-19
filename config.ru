@@ -9,12 +9,5 @@ if %w[staging production].include?(ENV['RACK_ENV'])
   use Rack::Status
 end
 
-require 'rack/oauth2_access_token_type_name_proxy'
-use Rack::OAuth2AccessTokenTypeNameProxy
-
-require 'rack/oauth2'
-use Rack::OAuth2::Server::Resource::Bearer, 'SublimeVideo Protected Resources' do |req|
-  Oauth2Token.valid.where(token: req.access_token).first || req.invalid_token!
-end
 
 run SublimeVideo::API

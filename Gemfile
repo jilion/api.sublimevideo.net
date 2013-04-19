@@ -12,9 +12,6 @@ gem 'actionpack',    '4.0.0.beta1'
 gem 'activerecord',  '4.0.0.beta1'
 gem 'oj'
 
-# OAuth
-gem 'rack-oauth2'
-
 # API framework
 gem 'sublime_video_private_api', '~> 1.3' # hosted on gemfury
 gem 'grape'

@@ -14,6 +14,10 @@ class Oauth2Token < OauthToken
   #   {invalidate:"/oauth/invalidate",capabilities:"/oauth/capabilities"}
   # end
 
+  def self.verify(token)
+    self.valid.where(token: token).first
+  end
+
   def as_json(options = {})
     d = { access_token: token, token_type: 'bearer' }
     d[:expires_in] = expires_in if valid_to

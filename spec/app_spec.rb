@@ -14,8 +14,11 @@ describe 'Outer App' do
   let(:token) { Oauth2Token.create!(user_id: user.id, client_application: application) }
   before do
     @sites = [
-      Site.new(token: 'abcd1234', hostname: 'rymai.me', user_id: 1),
-      Site.new(token: '1234abcd', hostname: 'rymai.com', user_id: 1)
+      Site.new(token: 'abcd1234', hostname: 'rymai.me', accessible_stage: 'beta',
+               extra_hostnames: '', dev_hostnames: '', staging_hostnames: '', wildcard: true, path: nil),
+      Site.new(token: '1234abcd', hostname: 'rymai.com', accessible_stage: 'alpha',
+               extra_hostnames: 'rymai.org, rymai.net', dev_hostnames: 'rymai.dev, remy.dev',
+               staging_hostnames: 'staging.rymai.com, staging.rymai.me', wildcard: false, path: 'blog')
     ]
 
     stub_api_for(User) do |stub|
