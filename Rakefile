@@ -1,4 +1,4 @@
-#!/usr/bin/env rake
+ENV['RACK_ENV'] ||= 'development'
 require 'portugal/tasks'
 Portugal.configure do |config|
   config.migrations_path = File.expand_path('db/migrations', __dir__)

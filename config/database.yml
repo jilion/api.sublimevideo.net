@@ -1,7 +1,7 @@
 development:
   adapter: postgresql
   encoding: utf8
-  database: apsv_development
+  database: msv_development_master
   pool: 25
   host: localhost
 
