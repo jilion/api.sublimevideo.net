@@ -6,10 +6,11 @@ module SublimeVideo
       extend ActiveSupport::Concern
 
       included do
+        use Grape::Middleware::ApiLogger
+
         use Grape::Middleware::Auth::OAuth2, token_class: 'Oauth2Token',
                                              parameter: 'access_token',
                                              realm: 'SublimeVideo Protected Resources'
-        use Grape::Middleware::ApiLogger
 
         content_type :json, 'application/json; charset=UTF-8'
         format :json

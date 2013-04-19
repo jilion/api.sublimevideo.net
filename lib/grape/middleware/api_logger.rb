@@ -2,9 +2,8 @@ module Grape
   module Middleware
     class ApiLogger < Grape::Middleware::Base
       def before
-        file = env['api.endpoint'].source.source_location[0]
-        line = env['api.endpoint'].source.source_location[1]
-        $logger.debug "[api] #{file}:#{line}"
+        route = env['api.endpoint'].routes[0]
+        $logger.info "#{route}, params: #{route.route_params}, view: #{route.route_rabl}"
       end
     end
   end
