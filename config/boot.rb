@@ -9,6 +9,7 @@ require 'grape'
 require 'grape/rabl'
 require 'kaminari/grape'
 require 'sublime_video_private_api'
+require 'lumberjack'
 
 # Configure ActiveRecord
 config = YAML.load_file(File.expand_path('database.yml', __dir__))[ENV['RACK_ENV']]
@@ -50,6 +51,8 @@ Rabl.configure do |config|
   # config.view_paths = []
   # config.raise_on_missing_attribute = true # Defaults to false
 end
+
+$logger = Lumberjack::Logger.new("log/#{ENV['RACK_ENV']}.log")  # Open a new log file with INFO level
 
 # Application setup
 require File.expand_path('../app/api', __dir__)

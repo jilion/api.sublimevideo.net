@@ -11,6 +11,7 @@ gem 'activesupport', '4.0.0.beta1'
 gem 'actionpack',    '4.0.0.beta1'
 gem 'activerecord',  '4.0.0.beta1'
 gem 'oj'
+gem 'lumberjack'
 
 # API framework
 gem 'sublime_video_private_api', '~> 1.3' # hosted on gemfury

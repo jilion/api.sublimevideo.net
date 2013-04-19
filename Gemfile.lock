@@ -150,6 +150,7 @@ DEPENDENCIES
   guard-rspec
   honeybadger
   kaminari
+  lumberjack
   newrelic_rpm
   oj
   pg

@@ -1,3 +1,5 @@
+require 'grape/middleware/api_logger'
+
 module SublimeVideo
   module APIs
     module Base
@@ -7,6 +9,8 @@ module SublimeVideo
         use Grape::Middleware::Auth::OAuth2, token_class: 'Oauth2Token',
                                              parameter: 'access_token',
                                              realm: 'SublimeVideo Protected Resources'
+        use Grape::Middleware::ApiLogger
+
         content_type :json, 'application/json; charset=UTF-8'
         format :json
         formatter :json, Grape::Formatter::Rabl
@@ -16,6 +20,10 @@ module SublimeVideo
         end
 
         helpers do
+          def logger
+            $logger
+          end
+
           def current_user
             @current_user ||= User.authorize!(env)
           end
