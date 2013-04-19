@@ -1,4 +1,4 @@
-object @site => :site
+object @site
 
 attributes :token, :hostname, :accessible_stage
 

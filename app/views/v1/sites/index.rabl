@@ -1,3 +1,3 @@
 collection @sites => :sites
 
-extends('sites/show')
+extends('v1/sites/show')
