@@ -29,7 +29,11 @@ class AccessToken
   private
 
   def expires_at
-    Time.parse(attributes[:expires_at])
+    if attributes[:expires_at]
+      Time.parse(attributes[:expires_at])
+    else
+      1_000.days.from_now
+    end
   end
 
 end
