@@ -5,22 +5,12 @@ require 'bundler/setup' if File.exists?(ENV['BUNDLE_GEMFILE'])
 Bundler.setup(:default, ENV['RACK_ENV']) if defined? Bundler
 
 require 'yaml'
-require 'active_record'
 require 'grape'
 require 'grape/rabl'
 require 'kaminari/grape'
 require 'sublime_video_private_api'
 require 'lumberjack'
 
-# Configure ActiveRecord
-config = YAML.load_file(File.expand_path('database.yml', __dir__))[ENV['RACK_ENV']]
-ActiveRecord::Base.establish_connection(
-  adapter:  config['adapter'],
-  host:     config['host'],
-  encoding: config['encoding'],
-  pool:     config['pool'],
-  database: config['database']
-)
 
 $:.push File.expand_path('../', __dir__)
 $:.push File.expand_path('../lib', __dir__)

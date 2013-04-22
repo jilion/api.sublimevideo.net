@@ -8,8 +8,6 @@ gem 'pg'
 
 # Internals
 gem 'activesupport', '4.0.0.beta1'
-gem 'actionpack',    '4.0.0.beta1'
-gem 'activerecord',  '4.0.0.beta1'
 gem 'oj'
 gem 'lumberjack'
 

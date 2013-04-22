@@ -143,8 +143,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  actionpack (= 4.0.0.beta1)
-  activerecord (= 4.0.0.beta1)
   activesupport (= 4.0.0.beta1)
   dalli
   grape
