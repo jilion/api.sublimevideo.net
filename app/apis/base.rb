@@ -8,8 +8,7 @@ module SublimeVideo
       included do
         use Grape::Middleware::ApiLogger
 
-        use Grape::Middleware::Auth::OAuth2, token_class: 'Oauth2Token',
-                                             parameter: 'access_token',
+        use Grape::Middleware::Auth::OAuth2, parameter: 'access_token',
                                              realm: 'SublimeVideo Protected Resources'
 
         content_type :json, 'application/json; charset=UTF-8'

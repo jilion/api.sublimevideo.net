@@ -10,8 +10,7 @@ describe 'Outer App' do
   end
 
   let(:user) { User.new(id: 1) }
-  let(:application) { ClientApplication.create!(user_id: user.id, name: 'WordPress plugin', url: 'http://docs.sublimevideo.net/wordpress') }
-  let(:token) { Oauth2Token.create!(user_id: user.id, client_application: application) }
+  let(:token) { AccessToken.new(user_id: user.id, token: 'abcd1234', expires_at: 1.hour.from_now) }
   before do
     @sites = [
       Site.new(token: 'abcd1234', hostname: 'rymai.me', accessible_stage: 'beta',
@@ -20,6 +19,11 @@ describe 'Outer App' do
                extra_hostnames: 'rymai.org, rymai.net', dev_hostnames: 'rymai.dev, remy.dev',
                staging_hostnames: 'staging.rymai.com, staging.rymai.me', wildcard: false, path: 'blog')
     ]
+
+    stub_api_for(AccessToken) do |stub|
+      stub.get("/private_api/oauth2_tokens/foo") { |env| [404, {}, {}.to_json] }
+      stub.get("/private_api/oauth2_tokens/#{token.token}") { |env| [200, {}, token.to_json] }
+    end
 
     stub_api_for(User) do |stub|
       stub.get("/private_api/users/#{user.id}") { |env| [200, {}, user.to_json] }

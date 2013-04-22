@@ -8,8 +8,7 @@ describe SublimeVideo::APIs::V1::Site do
   end
 
   let(:user) { User.new(id: 1) }
-  let(:application) { ClientApplication.create!(user_id: user.id, name: 'WordPress plugin', url: 'http://docs.sublimevideo.net/wordpress') }
-  let(:token) { Oauth2Token.create!(user_id: user.id, client_application: application) }
+  let(:token) { AccessToken.new(user_id: user.id, token: 'abcd1234', expires_at: 1.hour.from_now) }
 
   before do
     header 'Authorization', "Bearer #{token.token}"
@@ -22,12 +21,16 @@ describe SublimeVideo::APIs::V1::Site do
                staging_hostnames: 'staging.rymai.com, staging.rymai.me', wildcard: false, path: 'blog')
     ]
 
+    stub_api_for(AccessToken) do |stub|
+      stub.get("/private_api/oauth2_tokens/#{token.token}") { |env| [200, {}, token.to_json] }
+    end
+
     stub_api_for(Site) do |stub|
       route_prefix = "/private_api/users/#{user.id}/sites"
       stub.get(route_prefix) { |env| [200, {}, @sites.to_json] }
       stub.get("#{route_prefix}/#{@sites.first.token}") { |env| [200, {}, @sites.first.to_json] }
       stub.get("#{route_prefix}/#{@sites.last.token}") { |env| [200, {}, @sites.last.to_json] }
-      stub.get("#{route_prefix}/foo") { |env| [404, {}, @sites.first.to_json] }
+      stub.get("#{route_prefix}/foo") { |env| [404, {}, {}.to_json] }
     end
 
     User.should_receive(:authorize!).and_return(user)
