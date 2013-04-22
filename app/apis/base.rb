@@ -16,7 +16,7 @@ module SublimeVideo
         format :json
         formatter :json, Grape::Formatter::Rabl
         use(Rack::Config) { |env| env['api.tilt.root'] = File.expand_path('../views', __dir__) }
-        rescue_from ActiveRecord::RecordNotFound do |e|
+        rescue_from Faraday::Error::ResourceNotFound do |e|
           rack_response(MultiJson.dump(error: '404 Resource Not Found'), 404)
         end
 
