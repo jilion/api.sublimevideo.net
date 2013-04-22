@@ -1,19 +1,12 @@
 ENV['RACK_ENV'] ||= 'development'
+
+$:.push File.expand_path('../', __dir__)
+$:.push File.expand_path('../lib', __dir__)
+
 # Bundler setup
 ENV['BUNDLE_GEMFILE'] ||= File.expand_path('../Gemfile', __dir__)
 require 'bundler/setup' if File.exists?(ENV['BUNDLE_GEMFILE'])
 Bundler.setup(:default, ENV['RACK_ENV']) if defined? Bundler
-
-require 'yaml'
-require 'grape'
-require 'grape/rabl'
-require 'kaminari/grape'
-require 'sublime_video_private_api'
-require 'lumberjack'
-
-
-$:.push File.expand_path('../', __dir__)
-$:.push File.expand_path('../lib', __dir__)
 
 # Require models
 Dir[File.expand_path('../app/models/**/*.rb', __dir__)].each do |file|
@@ -22,7 +15,15 @@ Dir[File.expand_path('../app/models/**/*.rb', __dir__)].each do |file|
   require "#{dirname}/#{file_basename}"
 end
 
-require 'rabl'
+# Conf
+require 'env_yaml'
+
+# API
+require 'grape'
+require 'grape/rabl'
+require 'kaminari/grape'
+require 'sublime_video_private_api'
+
 Rabl.configure do |config|
   # Commented as these are defaults
   # config.cache_all_output = false
@@ -46,7 +47,6 @@ Rabl.configure do |config|
   # config.raise_on_missing_attribute = true # Defaults to false
 end
 
+# Logging
+require 'lumberjack'
 $logger = Lumberjack::Logger.new("log/#{ENV['RACK_ENV']}.log")  # Open a new log file with INFO level
-
-# Application setup
-require File.expand_path('../app/api', __dir__)

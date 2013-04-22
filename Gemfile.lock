@@ -23,6 +23,7 @@ GEM
       multi_json (~> 1.3)
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.33)
+    aggregate (0.2.2)
     arel (4.0.0.beta2)
     atomic (1.1.8)
     backports (2.6.7)
@@ -45,6 +46,9 @@ GEM
       rack-accept
       rack-mount
       virtus
+    grape-librato (1.1.0)
+      grape
+      librato-rack
     grape-rabl (0.2.0)
       grape (~> 0.3)
       i18n
@@ -73,6 +77,12 @@ GEM
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
     kgio (2.8.0)
+    librato-metrics (1.0.4)
+      aggregate (~> 0.2.2)
+      faraday (~> 0.7)
+      multi_json
+    librato-rack (0.2.1)
+      librato-metrics (~> 1.0.2)
     listen (0.7.3)
     lumberjack (1.0.3)
     method_source (0.8.1)
@@ -80,6 +90,9 @@ GEM
     multi_json (1.7.2)
     multi_xml (0.5.3)
     multipart-post (1.2.0)
+    newrelic-grape (1.2.1)
+      grape
+      newrelic_rpm
     newrelic_rpm (3.6.0.83)
     oj (2.0.10)
     pg (0.15.1)
@@ -146,11 +159,13 @@ DEPENDENCIES
   activesupport (= 4.0.0.beta1)
   dalli
   grape
+  grape-librato
   grape-rabl
   guard-rspec
   honeybadger
   kaminari
   lumberjack
+  newrelic-grape
   newrelic_rpm
   oj
   pg

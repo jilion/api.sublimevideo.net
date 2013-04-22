@@ -9,16 +9,19 @@ gem 'pg'
 # Internals
 gem 'activesupport', '4.0.0.beta1'
 gem 'oj'
-gem 'lumberjack'
+gem 'rack-status'
 
-# API framework
+# API
 gem 'sublime_video_private_api', '~> 1.3' # hosted on gemfury
 gem 'grape'
 gem 'grape-rabl'
 gem 'kaminari'
 
-# Rack middleware
-gem 'rack-status'
+# Monitoring
+gem 'grape-librato'
+
+# Logging
+gem 'lumberjack'
 
 group :staging, :production do
   gem 'unicorn'
@@ -26,9 +29,11 @@ group :staging, :production do
   # gem 'lograge'
   gem 'dalli'
   # gem 'rack-cache'
+
+  # Monitoring
   gem 'newrelic_rpm'
+  gem 'newrelic-grape'
   gem 'honeybadger'
-  # gem 'librato-rails', github: 'librato/librato-rails', branch: 'feature/rack_first'
 end
 
 group :development do
