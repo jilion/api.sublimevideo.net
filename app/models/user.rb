@@ -6,11 +6,11 @@ class User
   uses_private_api :my # SV app subdomain where model is located.
 
   def sites
-    Site.all(user_id: id, not_archived: true)
+    Site.all(user_id: id)
   end
 
   def site(token)
-    Site.find(token, user_id: id, not_archived: true)
+    Site.find(token, user_id: id)
   end
 
   def self.authorize!(env)
