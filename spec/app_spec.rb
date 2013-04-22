@@ -1,38 +1,13 @@
 require 'spec_helper'
 
-OUTER_APP = Rack::Builder.parse_file('config.ru').first
-
 describe 'Outer App' do
   include Rack::Test::Methods
 
   def app
-    OUTER_APP
+    Rack::Builder.parse_file('config.ru').first
   end
 
-  let(:user) { User.new(id: 1) }
-  let(:token) { AccessToken.new(user_id: user.id, token: 'abcd1234', expires_at: 1.hour.from_now) }
-  before do
-    @sites = [
-      Site.new(token: 'abcd1234', hostname: 'rymai.me', accessible_stage: 'beta',
-               extra_hostnames: '', dev_hostnames: '', staging_hostnames: '', wildcard: true, path: nil),
-      Site.new(token: '1234abcd', hostname: 'rymai.com', accessible_stage: 'alpha',
-               extra_hostnames: 'rymai.org, rymai.net', dev_hostnames: 'rymai.dev, remy.dev',
-               staging_hostnames: 'staging.rymai.com, staging.rymai.me', wildcard: false, path: 'blog')
-    ]
-
-    stub_api_for(AccessToken) do |stub|
-      stub.get("/private_api/oauth2_tokens/foo") { |env| [404, {}, {}.to_json] }
-      stub.get("/private_api/oauth2_tokens/#{token.token}") { |env| [200, {}, token.to_json] }
-    end
-
-    stub_api_for(User) do |stub|
-      stub.get("/private_api/users/#{user.id}") { |env| [200, {}, user.to_json] }
-    end
-
-    stub_api_for(Site) do |stub|
-      stub.get("/private_api/users/#{user.id}/sites") { |env| [200, {}, @sites.to_json] }
-    end
-  end
+  include_context 'private API stubbed calls'
 
   describe '/status' do
     it 'is up' do
@@ -69,6 +44,8 @@ describe 'Outer App' do
     end
 
     context 'with a valid access token' do
+      include_context 'valid authenticated request'
+
       context 'as a query param' do
         before { get "/sites?access_token=#{token.token}" }
         it_behaves_like 'authorized and valid response on /sites'
@@ -94,13 +71,10 @@ describe 'Outer App' do
         end
         it_behaves_like 'authorized and valid response on /sites'
       end
-
     end
 
     describe 'API formats' do
-      before do
-        header 'Authorization', "Bearer #{token.token}"
-      end
+      include_context 'valid authenticated request'
 
       context 'with a short JSON Accept header' do
         before do

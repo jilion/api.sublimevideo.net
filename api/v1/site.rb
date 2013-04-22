@@ -1,13 +1,13 @@
-require 'app/apis/base'
-require 'app/apis/v1'
+require 'api/base'
+require 'api/v1/headers'
 
 module SublimeVideo
-  module APIs
+  module API
     module V1
 
       class Site < Grape::API
-        include SublimeVideo::APIs::Base
-        include SublimeVideo::APIs::V1
+        include SublimeVideo::API::Base
+        include SublimeVideo::API::V1::Headers
 
         resource :sites do
           desc "Returns all current authenticated user's sites."

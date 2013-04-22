@@ -1,20 +1,27 @@
-require 'grape/middleware/api_logger'
-
 module SublimeVideo
-  module APIs
+  module API
     module Base
       extend ActiveSupport::Concern
 
       included do
-        use Grape::Middleware::ApiLogger
+        use Rack::Config do |env|
+          env['api.tilt.root'] = File.expand_path('views', __dir__)
+        end
+
+        require 'grape/middleware/logger'
+        use Grape::Middleware::Logger
+
+        require 'grape-librato'
+        use Librato::Grape::Middleware
 
         use Grape::Middleware::Auth::OAuth2, parameter: 'access_token',
                                              realm: 'SublimeVideo Protected Resources'
 
-        content_type :json, 'application/json; charset=UTF-8'
+        default_format :json
         format :json
         formatter :json, Grape::Formatter::Rabl
-        use(Rack::Config) { |env| env['api.tilt.root'] = File.expand_path('../views', __dir__) }
+        content_type :json, 'application/json; charset=UTF-8'
+
         rescue_from Faraday::Error::ResourceNotFound do |e|
           rack_response(MultiJson.dump(error: '404 Resource Not Found'), 404)
         end

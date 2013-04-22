@@ -1,55 +1,29 @@
 require 'spec_helper'
+require 'api/v1/site'
 
-describe SublimeVideo::APIs::V1::Site do
+describe SublimeVideo::API::V1::Site do
   include Rack::Test::Methods
 
   def app
-    SublimeVideo::APIs::V1::Site
+    SublimeVideo::API::V1::Site
   end
 
-  let(:user) { User.new(id: 1) }
-  let(:token) { AccessToken.new(user_id: user.id, token: 'abcd1234', expires_at: 1.hour.from_now) }
-
-  before do
-    header 'Authorization', "Bearer #{token.token}"
-
-    @sites = [
-      Site.new(token: 'abcd1234', hostname: 'rymai.me', accessible_stage: 'beta',
-               extra_hostnames: '', dev_hostnames: '', staging_hostnames: '', wildcard: true, path: nil),
-      Site.new(token: '1234abcd', hostname: 'rymai.com', accessible_stage: 'alpha',
-               extra_hostnames: 'rymai.org, rymai.net', dev_hostnames: 'rymai.dev, remy.dev',
-               staging_hostnames: 'staging.rymai.com, staging.rymai.me', wildcard: false, path: 'blog')
-    ]
-
-    stub_api_for(AccessToken) do |stub|
-      stub.get("/private_api/oauth2_tokens/#{token.token}") { |env| [200, {}, token.to_json] }
-    end
-
-    stub_api_for(Site) do |stub|
-      route_prefix = "/private_api/users/#{user.id}/sites"
-      stub.get(route_prefix) { |env| [200, {}, @sites.to_json] }
-      stub.get("#{route_prefix}/#{@sites.first.token}") { |env| [200, {}, @sites.first.to_json] }
-      stub.get("#{route_prefix}/#{@sites.last.token}") { |env| [200, {}, @sites.last.to_json] }
-      stub.get("#{route_prefix}/foo") { |env| [404, {}, {}.to_json] }
-    end
-
-    User.should_receive(:authorize!).and_return(user)
-  end
+  include_context 'valid authenticated request'
 
   describe "GET /sites" do
     context 'without any sites' do
-      before { user.should_receive(:sites).and_return([]) }
+      before { @sites = [] }
 
       it 'returns an empty array of sites' do
-        get '/sites'
-        last_response.status.should eq 200
-        MultiJson.load(last_response.body).should eq({ 'sites' => [] })
+        get '/sites' do |response|
+          MultiJson.load(response.body).should eq({ 'sites' => [] })
+          response.status.should eq 200
+        end
       end
     end
 
     context 'with sites' do
       before do
-        user.should_receive(:sites).and_return(@sites)
         get '/sites'
       end
 
