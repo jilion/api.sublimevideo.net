@@ -14,17 +14,14 @@ All API access is over HTTPS, and accessed from the api.sublimevideo.net domain.
 $ curl -i https://api.sublimevideo.net/sites/?access_token=OAUTH-TOKEN
 
 HTTP/1.1 200 OK
-Server: nginx
 Date: Fri, 12 Oct 2012 23:33:14 GMT
 Content-Type: application/json; charset=utf-8
 Connection: keep-alive
-Status: 200 OK
-ETag: "a00049ba79152d03380c34652f2cb612"
 X-SublimeVideo-Media-Type: sublimevideo-v1; format=json
-Content-Length: 5
+Content-Length: 233
 Cache-Control: max-age=0, private, must-revalidate
 
-[]
+{"sites":[{"token":"qzwcp0jm","accessible_stage":"beta","created_at":"2013-04-23T16:24:43Z","main_domain":"yourdomain.com","extra_domains":[],"dev_domains":["127.0.0.1","localhost"],"staging_domains":[],"wildcard":false,"path":""}]}
 ```
 Blank fields are included as `null` instead of being omitted.
 
@@ -48,12 +45,11 @@ $ curl -H "Authorization: Bearer OAUTH-TOKEN" https://api.sublimevideo.net
 $ curl https://api.sublimevideo.net/?access_token=OAUTH-TOKEN
 ```
 
-Read more about OAuth2. Note that OAuth2 tokens can be acquired programmatically, for applications that are not websites.
+Read more about [OAuth2](OAUTH.md). Note that OAuth2 tokens can be acquired programmatically, for applications that are not websites.
 
 ## Register your app
 
 1. Register your application at https://my.sublimevideo.net/account/applications
-2.
 
 ------------
 
