@@ -8,13 +8,6 @@ ENV['BUNDLE_GEMFILE'] ||= File.expand_path('../Gemfile', __dir__)
 require 'bundler/setup' if File.exists?(ENV['BUNDLE_GEMFILE'])
 Bundler.setup(:default, ENV['RACK_ENV']) if defined? Bundler
 
-# Require models
-Dir[File.expand_path('../app/models/**/*.rb', __dir__)].each do |file|
-  dirname = File.dirname(file)
-  file_basename = File.basename(file, File.extname(file))
-  require "#{dirname}/#{file_basename}"
-end
-
 # Conf
 require 'env_yaml'
 
@@ -23,6 +16,13 @@ require 'grape'
 require 'grape/rabl'
 require 'kaminari/grape'
 require 'sublime_video_private_api'
+
+# Require models
+Dir[File.expand_path('../app/models/**/*.rb', __dir__)].each do |file|
+  dirname = File.dirname(file)
+  file_basename = File.basename(file, File.extname(file))
+  require "#{dirname}/#{file_basename}"
+end
 
 Rabl.configure do |config|
   # Commented as these are defaults

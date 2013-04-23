@@ -3,21 +3,20 @@ source 'https://8dezqz7z7HWea9vtaFwg@gem.fury.io/me/' # thibaud@jilion.com accou
 
 ruby '2.0.0'
 
-# DB
-gem 'pg'
-
 # Internals
 gem 'activesupport', '4.0.0.beta1'
 gem 'oj'
-gem 'rack-status'
 
 # API
-gem 'sublime_video_private_api', '~> 1.3' # hosted on gemfury
+# gem 'rack-attack'
+# gem 'redis-activesupport', '~> 3.2'
 gem 'grape'
 gem 'grape-rabl'
+gem 'sublime_video_private_api', '~> 1.3' # hosted on gemfury
 gem 'kaminari'
 
 # Monitoring
+gem 'rack-status'
 gem 'grape-librato'
 
 # Logging
@@ -36,10 +35,6 @@ group :staging, :production do
   gem 'honeybadger'
 end
 
-group :development do
-  gem 'portugal'
-end
-
 group :test do
   gem 'rack-test'
   gem 'rspec'
@@ -47,7 +42,7 @@ end
 
 group :tools do
   gem 'ruby_gntp'
-  gem 'rb-fsevent'
   gem 'guard-rspec'
+  gem 'yard'
   gem 'powder'
 end
