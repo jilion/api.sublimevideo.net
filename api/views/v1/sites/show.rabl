@@ -1,6 +1,6 @@
 object @site
 
-attributes :token, :accessible_stage
+attributes :token, :accessible_stage, :created_at
 
 node(:main_domain) { |site| site.hostname }
 node(:extra_domains) { |site| site.extra_hostnames.try(:split, ', ') || [] }

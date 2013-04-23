@@ -27,7 +27,6 @@ group :staging, :production do
   gem 'rack-ssl'
   # gem 'lograge'
   gem 'dalli'
-  # gem 'rack-cache'
 
   # Monitoring
   gem 'newrelic_rpm'

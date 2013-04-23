@@ -38,14 +38,14 @@ describe SublimeVideo::API::V1::Site do
                 token: @sites.first.token, main_domain: @sites.first.hostname,
                 accessible_stage: @sites.first.accessible_stage,
                 extra_domains: [], dev_domains: [], staging_domains: [],
-                wildcard: true, path: ''
+                wildcard: true, path: '', created_at: '2013-04-23T00:00:00Z'
               },
               {
                 token: @sites.last.token, main_domain: @sites.last.hostname,
                 accessible_stage: @sites.last.accessible_stage,
                 extra_domains: %w[rymai.org rymai.net], dev_domains: %w[rymai.dev remy.dev],
                 staging_domains: %w[staging.rymai.com staging.rymai.me],
-                wildcard: false, path: 'blog'
+                wildcard: false, path: 'blog', created_at: '2013-04-24T00:00:00Z'
               }
             ]
           })
@@ -86,7 +86,8 @@ describe SublimeVideo::API::V1::Site do
             site: {
               token: @site.token, main_domain: @site.hostname,
               accessible_stage: @site.accessible_stage, extra_domains: [],
-              dev_domains: [], staging_domains: [], wildcard: true, path: ''
+              dev_domains: [], staging_domains: [], wildcard: true, path: '',
+              created_at: '2013-04-23T00:00:00Z'
             }
           })
         end
@@ -107,7 +108,7 @@ describe SublimeVideo::API::V1::Site do
               extra_domains: %w[rymai.org rymai.net],
               dev_domains: %w[rymai.dev remy.dev],
               staging_domains: %w[staging.rymai.com staging.rymai.me],
-              wildcard: false, path: 'blog'
+              wildcard: false, path: 'blog', created_at: '2013-04-24T00:00:00Z'
             }
           })
         end
