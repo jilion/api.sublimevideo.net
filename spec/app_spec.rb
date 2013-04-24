@@ -9,14 +9,6 @@ describe 'Outer App' do
 
   include_context 'private API stubbed calls'
 
-  describe '/status' do
-    it 'is up' do
-      get '/status'
-
-      last_response.status.should eq 200
-    end
-  end
-
   describe 'headers' do
     describe 'X-Runtime' do
       before { get '/status' }
@@ -40,6 +32,26 @@ describe 'Outer App' do
       it 'contains an Cache-Control header' do
         last_response.headers['Cache-Control'].should eq 'max-age=0, private, must-revalidate'
       end
+    end
+  end
+
+  describe '/status' do
+    it 'is up' do
+      get '/status'
+
+      last_response.status.should eq 200
+    end
+  end
+
+  describe NewRelic::Agent::Instrumentation::Grape do
+    it 'traces' do
+      NewRelic::Agent::Instrumentation::Grape
+        .any_instance
+        .should_receive(:perform_action_with_newrelic_trace)
+        .and_yield
+      get '/sites'
+
+      last_response.status.should eq 401
     end
   end
 

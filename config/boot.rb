@@ -13,6 +13,7 @@ require 'env_yaml'
 
 # API
 require 'grape'
+require 'newrelic-grape'
 require 'grape/rabl'
 require 'kaminari/grape'
 require 'sublime_video_private_api'
@@ -40,13 +41,13 @@ Rabl.configure do |config|
   # config.raise_on_missing_attribute = true # Defaults to false
 end
 
-# Monitoring
+# Exceptions handler
 require 'honeybadger'
 Honeybadger.configure do |config|
   config.api_key = ENV['HONEYBADGER_API_KEY']
 end
 
-# Require models
+# Models
 Dir[File.expand_path('../app/models/**/*.rb', __dir__)].each do |file|
   dirname = File.dirname(file)
   file_basename = File.basename(file, File.extname(file))

@@ -163,7 +163,6 @@ DEPENDENCIES
   kaminari
   lumberjack
   newrelic-grape
-  newrelic_rpm
   oj
   powder
   rack-ssl

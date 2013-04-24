@@ -18,6 +18,7 @@ gem 'kaminari'
 # Monitoring
 gem 'rack-status'
 gem 'grape-librato'
+gem 'newrelic-grape'
 
 # Logging
 gem 'lumberjack'
@@ -25,12 +26,7 @@ gem 'lumberjack'
 group :staging, :production do
   gem 'unicorn'
   gem 'rack-ssl'
-  # gem 'lograge'
   gem 'dalli'
-
-  # Monitoring
-  gem 'newrelic_rpm'
-  gem 'newrelic-grape'
   gem 'honeybadger'
 end
 

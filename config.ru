@@ -1,6 +1,7 @@
 # This file is used by Rack-based servers to start the application.
 require File.expand_path('config/boot', __dir__)
 
+# Exceptions handler
 use Honeybadger::Rack
 
 if %w[staging production].include?(ENV['RACK_ENV'])
@@ -20,19 +21,27 @@ end
 #   req.ip
 # end
 
-# Monitoring
+# Metrics
 require 'librato-rack'
 use Librato::Rack, config: Librato::Rack::Configuration.new
-
-# Sets an 'X-Runtime' response header
-use Rack::Runtime
 
 # Sets an 'Etag' and 'Cache-Control' response headers
 use Rack::ETag
 
+# Sets an 'X-Runtime' response header
+use Rack::Runtime
+
 require 'rack/status'
 use Rack::Status
 
+# Instrumentation
+NewRelic::Agent.manual_start
+
 # Application setup
-require File.expand_path('api/engine', __dir__)
+require 'api/engine'
 run SublimeVideo::API::Engine
+
+# Display the middleware stack (run `be rackup` to see it)
+if ENV['RACK_ENV'] == 'development'
+  $logger.info "Middleware stack:\n#{@use.inject('') { |a,e| a << "#{e.call.class}\n" }}"
+end
