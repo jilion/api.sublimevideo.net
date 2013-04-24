@@ -17,6 +17,32 @@ describe 'Outer App' do
     end
   end
 
+  describe 'headers' do
+    describe 'X-Runtime' do
+      before { get '/status' }
+
+      it 'contains a X-Runtime header' do
+        last_response.headers['X-Runtime'].should be_present
+      end
+    end
+
+    describe 'Etag' do
+      before { get '/status' }
+
+      it 'contains an Etag header' do
+        last_response.headers['Etag'].should be_present
+      end
+    end
+
+    describe 'Cache-Control' do
+      before { get '/status' }
+
+      it 'contains an Cache-Control header' do
+        last_response.headers['Cache-Control'].should eq 'max-age=0, private, must-revalidate'
+      end
+    end
+  end
+
   describe 'API Authorization' do
     context 'without a token' do
       before { get '/sites' }

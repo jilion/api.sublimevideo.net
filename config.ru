@@ -24,6 +24,12 @@ end
 require 'librato-rack'
 use Librato::Rack, config: Librato::Rack::Configuration.new
 
+# Sets an 'X-Runtime' response header
+use Rack::Runtime
+
+# Sets an 'Etag' and 'Cache-Control' response headers
+use Rack::ETag
+
 require 'rack/status'
 use Rack::Status
 
