@@ -18,12 +18,12 @@ shared_context 'private API stubbed calls' do
     end
 
     stub_api_for(Site) do |stub|
-      route_prefix = "/private_api/users/#{user.id}/sites"
+      route_prefix = "/private_api/sites"
       stub.get(route_prefix) { |env| [200, {}, @sites.to_json] }
       stub.get("#{route_prefix}/foo") { |env| [404, {}, {}.to_json] }
       if @sites.many?
-        stub.get("#{route_prefix}/#{@sites.first.token}") { |env| [200, {}, @sites.first.to_json] }
-        stub.get("#{route_prefix}/#{@sites.last.token}") { |env| [200, {}, @sites.last.to_json] }
+        stub.get("#{route_prefix}/#{@sites.first.token}?user_id=#{user.id}") { |env| [200, {}, @sites.first.to_json] }
+        stub.get("#{route_prefix}/#{@sites.last.token}?user_id=#{user.id}") { |env| [200, {}, @sites.last.to_json] }
       end
     end
 
