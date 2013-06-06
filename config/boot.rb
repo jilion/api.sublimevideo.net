@@ -8,7 +8,7 @@ ENV['BUNDLE_GEMFILE'] ||= File.expand_path('../Gemfile', __dir__)
 require 'bundler/setup' if File.exists?(ENV['BUNDLE_GEMFILE'])
 Bundler.setup(:default, ENV['RACK_ENV']) if defined? Bundler
 
-if ENV['RACK_ENV'] == 'development'
+if %w[development test].include?(ENV['RACK_ENV'])
   require 'dotenv'
   Dotenv.load
 end

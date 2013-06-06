@@ -4,7 +4,9 @@ source 'https://8dezqz7z7HWea9vtaFwg@gem.fury.io/me/' # thibaud@jilion.com accou
 ruby '2.0.0'
 
 # Internals
-gem 'activesupport'
+gem 'actionpack', '4.0.0.rc.1'
+gem 'activesupport', '4.0.0.rc.1'
+gem 'activemodel', '4.0.0.rc.1'
 gem 'oj'
 
 # API
@@ -16,7 +18,7 @@ gem 'kaminari'
 # Monitoring
 gem 'rack-status'
 gem 'grape-librato'
-gem 'newrelic-grape'
+gem 'newrelic-grape', github: 'jilion/newrelic-grape', branch: 'avoid-autostart'
 
 # Logging
 gem 'lumberjack'
