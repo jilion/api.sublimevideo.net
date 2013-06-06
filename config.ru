@@ -4,7 +4,7 @@ require File.expand_path('config/boot', __dir__)
 # Exceptions handler
 use Honeybadger::Rack
 
-if %w[staging production].include?(ENV['RACK_ENV'])
+if ENV['RACK_ENV'] == 'production'
   require 'rack/ssl'
   use Rack::SSL
 end

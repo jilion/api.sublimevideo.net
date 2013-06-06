@@ -4,15 +4,13 @@ source 'https://8dezqz7z7HWea9vtaFwg@gem.fury.io/me/' # thibaud@jilion.com accou
 ruby '2.0.0'
 
 # Internals
-gem 'activesupport', '4.0.0.beta1'
+gem 'activesupport'
 gem 'oj'
 
 # API
-# gem 'rack-attack'
-# gem 'redis-activesupport', '~> 3.2'
 gem 'grape'
 gem 'grape-rabl'
-gem 'sublime_video_private_api', '~> 1.3' # hosted on gemfury
+gem 'sublime_video_private_api', '~> 1.4' # hosted on gemfury
 gem 'kaminari'
 
 # Monitoring
@@ -23,11 +21,16 @@ gem 'newrelic-grape'
 # Logging
 gem 'lumberjack'
 
-group :staging, :production do
+group :production do
   gem 'unicorn'
   gem 'rack-ssl'
+  gem 'memcachier'
   gem 'dalli'
   gem 'honeybadger'
+end
+
+group :development, :test do
+  gem 'dotenv'
 end
 
 group :test do

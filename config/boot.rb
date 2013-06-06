@@ -8,14 +8,17 @@ ENV['BUNDLE_GEMFILE'] ||= File.expand_path('../Gemfile', __dir__)
 require 'bundler/setup' if File.exists?(ENV['BUNDLE_GEMFILE'])
 Bundler.setup(:default, ENV['RACK_ENV']) if defined? Bundler
 
-# Conf
-require 'env_yaml'
+if ENV['RACK_ENV'] == 'development'
+  require 'dotenv'
+  Dotenv.load
+end
 
 # API
 require 'grape'
 require 'newrelic-grape'
 require 'grape/rabl'
 require 'kaminari/grape'
+require 'dalli'
 require 'sublime_video_private_api'
 
 Rabl.configure do |config|
@@ -56,4 +59,4 @@ end
 
 # Logging
 require 'lumberjack'
-$logger = Lumberjack::Logger.new("log/#{ENV['RACK_ENV']}.log")  # Open a new log file with INFO level
+$logger = Lumberjack::Logger.new("log/#{ENV['RACK_ENV']}.log") # Open a new log file with INFO level
