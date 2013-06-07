@@ -8,7 +8,7 @@ module SublimeVideo
           env['api.tilt.root'] = File.expand_path('views', __dir__)
         end
 
-        require 'grape/middleware/logger'
+        require 'lib/grape/middleware/logger'
         use Grape::Middleware::Logger
 
         require 'grape-librato'
