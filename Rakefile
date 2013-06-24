@@ -1,1 +1,1 @@
-ENV['RACK_ENV'] ||= 'development'
+require File.expand_path('config/boot', __dir__)

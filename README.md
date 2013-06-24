@@ -1,4 +1,5 @@
 # api.sublimevideo.net
+[![Code Climate](https://codeclimate.com/repos/51765f4b13d63717ac009723/badges/8b89a2d889fe62735918/gpa.png)](https://codeclimate.com/repos/51765f4b13d63717ac009723/feed)
 
 Lightweight application based on [Grape](https://github.com/intridea/grape) that handles the SublimeVideo Service's Public API: https://api.sublimevideo.net
 
