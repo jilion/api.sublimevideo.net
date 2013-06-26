@@ -12,6 +12,7 @@ gem 'oj'
 # API
 gem 'grape'
 gem 'grape-rabl'
+gem 'faraday-http-cache', github: 'plataformatec/faraday-http-cache'
 gem 'sublime_video_private_api', '~> 1.4' # hosted on gemfury
 gem 'kaminari'
 
