@@ -9,8 +9,6 @@ gem 'oj'
 # API
 gem 'grape'
 gem 'grape-rabl'
-# until > 0.2.0 is released, then we'll bump it in svpa and update sublime_video_private_api in this Gemfile.lock
-gem 'faraday-http-cache', github: 'plataformatec/faraday-http-cache'
 gem 'sublime_video_private_api', '~> 1.4' # hosted on gemfury
 gem 'kaminari'
 
