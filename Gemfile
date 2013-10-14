@@ -9,7 +9,7 @@ gem 'oj'
 # API
 gem 'grape'
 gem 'grape-rabl'
-gem 'sublime_video_private_api', '~> 1.4' # hosted on gemfury
+gem 'sublime_video_private_api', '~> 1.6' # hosted on gemfury
 gem 'kaminari'
 
 # Monitoring
