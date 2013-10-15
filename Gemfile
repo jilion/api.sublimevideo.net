@@ -10,12 +10,12 @@ gem 'oj'
 gem 'grape'
 gem 'grape-rabl'
 gem 'sublime_video_private_api', '~> 1.6' # hosted on gemfury
-gem 'responders', '~> 0.6' # 1.0 depends on railties causing NewRelic to detect the app as a Rails app... FUCK.
 gem 'kaminari'
 
 # Monitoring
 gem 'rack-status'
 gem 'grape-librato'
+gem 'newrelic_rpm', github: 'jilion/rpm', branch: 'proper-rails-detection'
 gem 'newrelic-grape'
 
 # Logging
