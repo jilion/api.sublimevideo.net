@@ -20,13 +20,14 @@ gem 'newrelic-grape'
 
 # Logging
 gem 'lumberjack'
+gem 'dalli'
+gem 'honeybadger'
+gem 'faraday', '~> 0.8.9'
 
 group :production do
   gem 'unicorn'
   gem 'rack-ssl'
   gem 'memcachier'
-  gem 'dalli'
-  gem 'honeybadger'
 end
 
 group :development, :test do
