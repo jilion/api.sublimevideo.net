@@ -25,6 +25,7 @@ gem 'honeybadger'
 gem 'faraday', '~> 0.8.9'
 
 group :production do
+  gem 'rails_12factor'
   gem 'unicorn'
   gem 'rack-ssl'
   gem 'memcachier'
