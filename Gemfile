@@ -15,8 +15,6 @@ gem 'kaminari'
 # Monitoring
 gem 'rack-status'
 gem 'grape-librato'
-gem 'newrelic_rpm'
-gem 'newrelic-grape'
 
 # Logging
 gem 'lumberjack'

@@ -34,9 +34,6 @@ use Rack::Runtime
 require 'rack/status'
 use Rack::Status
 
-# Instrumentation
-NewRelic::Agent.manual_start if ENV['RACK_ENV'] == 'production'
-
 # Application setup
 require 'api/engine'
 run SublimeVideo::API::Engine

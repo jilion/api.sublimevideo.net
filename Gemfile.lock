@@ -102,10 +102,6 @@ GEM
     multi_json (1.10.1)
     multi_xml (0.5.5)
     multipart-post (1.2.0)
-    newrelic-grape (1.4.1)
-      grape
-      newrelic_rpm
-    newrelic_rpm (3.9.1.236)
     oj (2.10.0)
     powder (0.2.1)
       thor (>= 0.11.5)
@@ -194,8 +190,6 @@ DEPENDENCIES
   kaminari
   lumberjack
   memcachier
-  newrelic-grape
-  newrelic_rpm
   oj
   powder
   rack-ssl
