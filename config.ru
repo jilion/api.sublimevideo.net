@@ -2,7 +2,7 @@
 require File.expand_path('config/boot', __dir__)
 
 # Exceptions handler
-use Honeybadger::Rack
+use Honeybadger::Rack::ErrorNotifier
 
 if ENV['RACK_ENV'] == 'production'
   require 'rack/ssl'
@@ -35,7 +35,7 @@ require 'rack/status'
 use Rack::Status
 
 # Instrumentation
-NewRelic::Agent.manual_start
+NewRelic::Agent.manual_start if ENV['RACK_ENV'] == 'production'
 
 # Application setup
 require 'api/engine'

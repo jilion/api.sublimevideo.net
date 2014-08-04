@@ -43,18 +43,6 @@ describe 'Outer App' do
     end
   end
 
-  describe NewRelic::Agent::Instrumentation::Grape do
-    it 'traces' do
-      NewRelic::Agent::Instrumentation::Grape
-        .any_instance
-        .should_receive(:perform_action_with_newrelic_trace)
-        .and_yield
-      get '/sites'
-
-      last_response.status.should eq 401
-    end
-  end
-
   describe 'API Authorization' do
     context 'without a token' do
       before { get '/sites' }

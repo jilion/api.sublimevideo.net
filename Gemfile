@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 source 'https://8dezqz7z7HWea9vtaFwg@gem.fury.io/me/' # thibaud@jilion.com account
 
-ruby '2.1.0'
+ruby '2.1.2'
 
 # Internals
 gem 'oj'
@@ -15,7 +15,7 @@ gem 'kaminari'
 # Monitoring
 gem 'rack-status'
 gem 'grape-librato'
-gem 'newrelic_rpm', github: 'jilion/rpm', branch: 'proper-rails-detection'
+gem 'newrelic_rpm'
 gem 'newrelic-grape'
 
 # Logging
@@ -37,7 +37,7 @@ end
 
 group :test do
   gem 'rack-test'
-  gem 'rspec'
+  gem 'rspec', '~> 2.14'
 end
 
 group :tools do

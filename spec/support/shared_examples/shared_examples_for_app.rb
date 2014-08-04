@@ -1,13 +1,13 @@
 shared_examples 'unauthorized response' do
   it 'returns a 401 Unauthorized' do
-    MultiJson.load(last_response.body).should eq({ 'error' => 'invalid_token' })
+    MultiJson.load(last_response.body).should eq('error' => 'invalid_grant')
     last_response.status.should eq 401
   end
 end
 
 shared_examples 'invalid token response' do
   it 'returns a 401 Invalid Token' do
-    MultiJson.load(last_response.body).should eq({ 'error' => 'invalid_token' })
+    MultiJson.load(last_response.body).should eq('error' => 'invalid_grant')
     last_response.status.should eq 401
   end
 end
@@ -39,7 +39,7 @@ end
 
 shared_examples 'resource not found response' do
   it 'returns a 404 Resource Not Found' do
-    MultiJson.load(last_response.body).should eq({ 'error' => '404 Resource Not Found' })
+    MultiJson.load(last_response.body).should eq('error' => '404 Resource Not Found')
     last_response.status.should eq 404
   end
 end
